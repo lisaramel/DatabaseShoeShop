@@ -134,19 +134,21 @@ insert into rating (name, number) VALUES
 insert into review (ratingId, text, productId, ordersId) VALUES
  (1, 'Fin färg!', 2, 1), (3,'Små i storlek', 1, 1),  (2, null, 8, 2), (3, null, 2, 3),(1, 'Sååå fina!', 5, 3), (2, null, 6, 3), (4, 'Fick bara en sko :(', 6, 4), (3, 'Väldigt små i storleken', 3, 4);
 
+                                           
 -- ----------------------------
 
+                                           
 select * from review;
 
 select category.name Kategori, count(category.name) 'Antal produkter' from category
-inner join categoryBelonging on categoryBelonging.categoryId = category.id
+join categoryBelonging on categoryBelonging.categoryId = category.id
 group by category.name;
 
 
 select customer.name Namn, sum(product.price) Summa from customer
-inner join orders on orders.customerId = customer.id
-inner join cart on cart.ordersId = orders.id
-inner join product on product.id = cart.productId
+join orders on orders.customerId = customer.id
+join cart on cart.ordersId = orders.id
+join product on product.id = cart.productId
 group by customer.id;
 
 select customer.name Name
@@ -177,15 +179,15 @@ order by antal desc
 limit 5;
 
 select customer.name Namn, sum(product.price) Summa from customer
-inner join orders on orders.customerId = customer.id
-inner join cart on cart.ordersId = orders.id
-inner join product on product.id = cart.productId
+join orders on orders.customerId = customer.id
+join cart on cart.ordersId = orders.id
+join product on product.id = cart.productId
 group by customer.id;
 
 
 select month(dateOfOrder) Månad, sum(product.price) Summa from orders
-inner join cart on cart.ordersId = orders.id
-inner join product on product.id = cart.productId
+join cart on cart.ordersId = orders.id
+join product on product.id = cart.productId
 group by month(dateOfOrder)
 order by Summa desc
 limit 1;
